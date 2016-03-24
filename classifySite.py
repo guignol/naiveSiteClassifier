@@ -19,7 +19,6 @@ from textblob.classifiers import NaiveBayesClassifier
 
 import contextlib
 
-
 arguments = sys.argv
 NB_SITES = int(arguments[1])
 
@@ -38,8 +37,6 @@ WEBSITE_DATA_FILE = DATA_FOLDER + "categories/website_data.pickle"
 
 URL_LIMITS = [0, NB_SITES]
 
-
-# In[3]:
 
 DELIMITER = "\t"
 DELIMITER_URL = ","
@@ -66,12 +63,8 @@ STEMMER = LancasterStemmer()
 REQUEST_HEADER={'User-Agent': "(Mozilla/5.0 (Windows; U; Windows NT 6.0;en-US; rv:1.9.2) Gecko/20100115 Firefox/3.6" }
 
 
-# In[4]:
-
 urlopener=urllib2.build_opener()
 
-
-# In[5]:
 
 def load_classified_sites():
 	with open(CLASSIFIED_SITES_FILE, 'rb') as sites_categories_file:
@@ -81,8 +74,6 @@ def load_classified_sites():
 				CLASSIFIED_SITES[row[0]] = {'domain': row[0],'category': row[1], 'subcategory': row[2], 'subcategory_id':row[3]}
 	return CLASSIFIED_SITES
 
-
-# In[6]:
 
 def load_url_list(URL_LIST):
 	for filename in os.listdir(DATA_FOLDER + "url"):
@@ -105,8 +96,6 @@ def load_url_list(URL_LIST):
 	return URL_LIST
 
 
-# In[7]:
-
 def load_categories(SITE_CATEGORIES,SITE_SUBCATEGORIES,SUBCATEGORY_CATEGORY_DICT, SUBCATEGORY_REVERSE_DICT):
 	with open(CATEGORIES_FILE, 'rU') as category_file:
 		category_reader = csv.reader(category_file, delimiter=',')
@@ -119,8 +108,6 @@ def load_categories(SITE_CATEGORIES,SITE_SUBCATEGORIES,SUBCATEGORY_CATEGORY_DICT
 	return SUBCATEGORY_CATEGORY_DICT
 
 
-# In[8]:
-
 def subcategory_to_dictionnary(domain, subcategory):
 	output = dict()
 	if subcategory != "":
@@ -132,24 +119,13 @@ def subcategory_to_dictionnary(domain, subcategory):
 	return output
 
 
-# In[9]:
-
 load_classified_sites()
-
-
-# In[10]:
 
 load_url_list(URL_LIST)
 
-
-# In[11]:
-
 URL_LIST
 
-
 load_categories(SITE_CATEGORIES,SITE_SUBCATEGORIES,SUBCATEGORY_CATEGORY_DICT,SUBCATEGORY_REVERSE_DICT)
-
-
 
 
 def visibile_text(element):
@@ -329,6 +305,3 @@ random.shuffle(featuresets)
 train_set, test_set = featuresets[0:], featuresets[:data_set_split]
 classifier = NaiveBayesClassifier(train_set)
 print classifier.accuracy(test_set)
-
-
-
